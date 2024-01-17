@@ -11,7 +11,7 @@ metadata:
   name: syn-sigstore-policy-controller-webhook
   namespace: syn-sigstore-policy-controller
 spec:
-  replicas: 1
+  replicas: 2
   selector:
     matchLabels:
       app.kubernetes.io/instance: syn-sigstore-policy-controller
