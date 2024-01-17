@@ -1,0 +1,4 @@
+parameters:
+  sigstore_policy_controller:
+    =_metadata: {}
+    namespace: syn-sigstore-policy-controller

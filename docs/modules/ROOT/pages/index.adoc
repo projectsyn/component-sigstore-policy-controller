@@ -1,0 +1,5 @@
+= sigstore-policy-controller
+
+sigstore-policy-controller is a Commodore component to manage sigstore-policy-controller.
+
+See the xref:references/parameters.adoc[parameters] reference for further details.
