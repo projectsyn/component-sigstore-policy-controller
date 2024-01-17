@@ -24,3 +24,9 @@ parameters:
         helm_params:
           name: syn-sigstore-policy-controller
           namespace: ${sigstore_policy_controller:namespace}
+  commodore:
+    postprocess:
+      filters:
+        - type: jsonnet
+          path: sigstore-policy-controller/01_helm_chart/policy-controller/templates/webhook
+          filter: postprocess/clean_helm_output.jsonnet
