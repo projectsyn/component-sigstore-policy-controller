@@ -1,0 +1,19 @@
+apiVersion: policy.sigstore.dev/v1beta1
+kind: ClusterImagePolicy
+metadata:
+  annotations:
+    sigstore-policy-controller.syn.tools/description: |
+      Verify signature of all images against the provided public key.
+  labels:
+    name: test-policy
+  name: test-policy
+spec:
+  authorities:
+    - data: |-
+        -----BEGIN PUBLIC KEY-----
+        ....
+        -----END PUBLIC KEY-----
+      hashAlgorithm: sha256
+      key: null
+  images:
+    - glob: '**'

@@ -8,6 +8,8 @@ parameters:
         source: https://sigstore.github.io/helm-charts
         version: 0.6.5
 
+    cluster_policies: {}
+
     helm_values:
       webhook:
         replicaCount: 2
