@@ -2,6 +2,8 @@ local com = import 'lib/commodore.libjsonnet';
 local kap = import 'lib/kapitan.libjsonnet';
 local kube = import 'lib/kube.libjsonnet';
 
+local prometheus = import 'lib/prometheus.libsonnet';
+
 local inv = kap.inventory();
 local params = inv.parameters.sigstore_policy_controller;
 
@@ -31,8 +33,22 @@ local aggregated_rbac =
     ],
   };
 
+local namespace =
+  local ns = kube.Namespace(params.namespace) {
+    metadata+: {
+      labels+: {
+        // Scrape metrics through cluster-monitoring stack on OCP4
+        'openshift.io/cluster-monitoring': 'true',
+      },
+    },
+  };
+  if std.member(inv.applications, 'prometheus') then
+    prometheus.RegisterNamespace(ns)
+  else
+    ns;
+
 {
-  '00_namespace': kube.Namespace(params.namespace),
+  '00_namespace': namespace,
   '02_aggregated_rbac': aggregated_rbac,
   [if std.length(policies) > 0 then '10_clusterpolicies']: policies,
 }
