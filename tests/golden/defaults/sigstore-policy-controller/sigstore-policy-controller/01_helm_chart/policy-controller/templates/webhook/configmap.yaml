@@ -34,3 +34,19 @@ metadata:
     helm.sh/chart: policy-controller-0.6.5
   name: syn-sigstore-policy-controller-webhook-logging
   namespace: syn-sigstore-policy-controller
+---
+apiVersion: v1
+data:
+  metrics.backend-destination: prometheus
+  metrics.request-metrics-backend-destination: prometheus
+kind: ConfigMap
+metadata:
+  labels:
+    app.kubernetes.io/instance: syn-sigstore-policy-controller
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: policy-controller
+    app.kubernetes.io/version: 0.8.2
+    control-plane: syn-sigstore-policy-controller-webhook
+    helm.sh/chart: policy-controller-0.6.5
+  name: syn-sigstore-policy-controller-webhook-observability
+  namespace: syn-sigstore-policy-controller
