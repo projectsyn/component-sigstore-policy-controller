@@ -1,0 +1,68 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  labels:
+    app.kubernetes.io/instance: syn-sigstore-policy-controller
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: policy-controller
+    app.kubernetes.io/version: 0.8.2
+    control-plane: syn-sigstore-policy-controller-webhook
+    helm.sh/chart: policy-controller-0.6.5
+  name: syn-sigstore-policy-controller-webhook
+  namespace: syn-sigstore-policy-controller
+rules:
+  - apiGroups:
+      - ''
+    resources:
+      - configmaps
+      - secrets
+    verbs:
+      - get
+      - list
+      - update
+      - watch
+  - apiGroups:
+      - coordination.k8s.io
+    resources:
+      - leases
+    verbs:
+      - get
+      - list
+      - create
+      - update
+      - delete
+      - patch
+      - watch
+  - apiGroups:
+      - ''
+    resourceNames:
+      - config-image-policies
+    resources:
+      - configmaps
+    verbs:
+      - get
+      - list
+      - create
+      - update
+      - patch
+      - watch
+  - apiGroups:
+      - ''
+    resourceNames:
+      - config-sigstore-keys
+    resources:
+      - configmaps
+    verbs:
+      - get
+      - list
+      - create
+      - update
+      - patch
+      - watch
+  - apiGroups:
+      - policy.sigstore.dev
+    resources:
+      - trustroots
+    verbs:
+      - get
+      - list

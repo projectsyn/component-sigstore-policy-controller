@@ -7,7 +7,7 @@
       "name": "sigstore-policy-controller",
       "slug": "sigstore-policy-controller",
       "parameter_key": "sigstore_policy_controller",
-      "test_cases": "defaults",
+      "test_cases": "defaults component-prometheus",
       "add_lib": "n",
       "add_pp": "n",
       "add_golden": "y",

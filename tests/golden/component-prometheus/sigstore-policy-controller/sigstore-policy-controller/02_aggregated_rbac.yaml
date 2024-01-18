@@ -1,0 +1,17 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  annotations: {}
+  labels:
+    name: syn-sigstore-policy-controller-cluster-reader
+    rbac.authorization.k8s.io/aggregate-to-cluster-reader: 'true'
+  name: syn:sigstore-policy-controller:cluster-reader
+rules:
+  - apiGroups:
+      - policy.sigstore.dev
+    resources:
+      - '*'
+    verbs:
+      - get
+      - list
+      - watch
