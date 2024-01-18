@@ -15,7 +15,24 @@ local policies = com.generateResources(
   ClusterPolicy,
 );
 
+local aggregated_rbac =
+  kube.ClusterRole('syn:sigstore-policy-controller:cluster-reader') {
+    metadata+: {
+      labels+: {
+        'rbac.authorization.k8s.io/aggregate-to-cluster-reader': 'true',
+      },
+    },
+    rules: [
+      {
+        apiGroups: [ 'policy.sigstore.dev' ],
+        resources: [ '*' ],
+        verbs: [ 'get', 'list', 'watch' ],
+      },
+    ],
+  };
+
 {
   '00_namespace': kube.Namespace(params.namespace),
+  '02_aggregated_rbac': aggregated_rbac,
   [if std.length(policies) > 0 then '10_clusterpolicies']: policies,
 }
