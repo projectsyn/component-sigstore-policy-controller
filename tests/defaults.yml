@@ -1,3 +1,18 @@
-# Overwrite parameters here
-
-# parameters: {...}
+parameters:
+  sigstore_policy_controller:
+    cluster_policies:
+      test-policy:
+        metadata:
+          annotations:
+            sigstore-policy-controller.syn.tools/description: |
+              Verify signature of all images against the provided public key.
+        spec:
+          images:
+            - glob: "**"
+          authorities:
+            - key:
+              hashAlgorithm: sha256
+              data: |-
+                -----BEGIN PUBLIC KEY-----
+                ....
+                -----END PUBLIC KEY-----

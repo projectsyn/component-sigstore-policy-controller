@@ -2,3 +2,16 @@ parameters:
   sigstore_policy_controller:
     =_metadata: {}
     namespace: syn-sigstore-policy-controller
+
+    charts:
+      policy-controller:
+        source: https://sigstore.github.io/helm-charts
+        version: 0.6.5
+
+    cluster_policies: {}
+
+    helm_values:
+      webhook:
+        replicaCount: 2
+      serviceMonitor:
+        enabled: true

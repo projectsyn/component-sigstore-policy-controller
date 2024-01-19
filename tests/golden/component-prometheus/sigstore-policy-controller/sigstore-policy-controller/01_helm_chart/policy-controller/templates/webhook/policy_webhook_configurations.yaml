@@ -1,0 +1,31 @@
+apiVersion: admissionregistration.k8s.io/v1
+kind: MutatingWebhookConfiguration
+metadata:
+  name: defaulting.clusterimagepolicy.sigstore.dev
+webhooks:
+  - admissionReviewVersions:
+      - v1
+    clientConfig:
+      service:
+        name: webhook
+        namespace: syn-sigstore-policy-controller
+    failurePolicy: Fail
+    matchPolicy: Equivalent
+    name: defaulting.clusterimagepolicy.sigstore.dev
+    sideEffects: None
+---
+apiVersion: admissionregistration.k8s.io/v1
+kind: ValidatingWebhookConfiguration
+metadata:
+  name: validating.clusterimagepolicy.sigstore.dev
+webhooks:
+  - admissionReviewVersions:
+      - v1
+    clientConfig:
+      service:
+        name: webhook
+        namespace: syn-sigstore-policy-controller
+    failurePolicy: Fail
+    matchPolicy: Equivalent
+    name: validating.clusterimagepolicy.sigstore.dev
+    sideEffects: None

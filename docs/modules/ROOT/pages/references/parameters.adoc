@@ -10,10 +10,97 @@ default:: `syn-sigstore-policy-controller`
 
 The namespace in which to deploy this component.
 
+The component configures appropriate labels to ensure OpenShift 4's cluster monitoring or component-prometheus monitoring stacks pick up the policy controller's metrics.
 
-== Example
+== `charts`
 
+[horizontal]
+type:: dict
+default:: see https://github.com/projectsyn/component-sigstore-policy-controller/blob/master/class/defaults.yml[`class/defaults.yml`]
+
+This parameter contains the Helm chart source and version for the policy controller.
+
+== `cluster_policies`
+
+[horizontal]
+type:: dict
+default:: `{}`
+
+This parameter allows users to configure `ClusterImagePolicy` resources that should be deployed.
+
+Each key-value pair in this parameter is translated into a `ClusterImagePolicy` resource.
+The key is used as `metadata.name` of the resulting resource.
+The value is used verbatim as a partial `ClusterImagePolicy` resource.
+The component doesn't perform any validation on the provided configuration.
+
+Setting a key-value pair's value to `null` allows users to remove policies from the configuration.
+
+NOTE: When defining multiple policies, pods must satisfy all policies to be admitted to the cluster.
+NOTE: By default, policies are only applied to namespaces which are labeled `policy.sigstore.dev/include=true`.
+
+See https://docs.sigstore.dev/policy-controller/overview/#configuring-policy-controller-clusterimagepolicy[the policy controller documentation] for details on supported configurations.
+
+=== Example
+
+Below we show an example component configuration and the resulting `ClusterImagePolicy` resource:
+
+.Component configuration
 [source,yaml]
 ----
-namespace: example-namespace
+parameters:
+  sigstore_policy_controller:
+    cluster_policies:
+      image-policy:
+        metadata:
+          annotations:
+            sigstore-policy-controller.syn.tools/description: |
+              Example policy
+        spec:
+          images:
+            - glob: "**"
+          authorities:
+            - key:
+                hashAlgorithm: sha256
+                data: |-
+                  -----BEGIN PUBLIC KEY-----
+                  ...
+                  -----END PUBLIC KEY-----
 ----
+
+.Resulting `ClusterImagePolicy`
+[source,yaml]
+----
+apiVersion: policy.sigstore.dev/v1beta1
+kind: ClusterImagePolicy
+metadata:
+  annotations:
+    sigstore-policy-controller.syn.tools/description: |
+      Example policy
+  labels:
+    name: image-policy
+  name: image-policy
+spec:
+  authorities:
+    - data: |-
+        -----BEGIN PUBLIC KEY-----
+        ....
+        -----END PUBLIC KEY-----
+      hashAlgorithm: sha256
+      key: null
+  images:
+    - glob: '**'
+----
+
+== `helm_values`
+
+[horizontal]
+type:: dict
+default:: see https://github.com/projectsyn/component-sigstore-policy-controller/blob/master/class/defaults.yml[`class/defaults.yml`]
+
+The Helm values used to render the policy controller Helm chart.
+
+[NOTE]
+====
+The component doesn't expose the policy controller container image in a dedicated parameter.
+Please adjust the container image directly through parameter `helm_values` if necessary.
+====

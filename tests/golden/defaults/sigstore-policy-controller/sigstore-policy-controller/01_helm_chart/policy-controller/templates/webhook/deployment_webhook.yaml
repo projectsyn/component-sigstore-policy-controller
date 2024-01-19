@@ -1,0 +1,108 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app.kubernetes.io/instance: syn-sigstore-policy-controller
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: policy-controller
+    app.kubernetes.io/version: 0.8.2
+    control-plane: syn-sigstore-policy-controller-webhook
+    helm.sh/chart: policy-controller-0.6.5
+  name: syn-sigstore-policy-controller-webhook
+  namespace: syn-sigstore-policy-controller
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app.kubernetes.io/instance: syn-sigstore-policy-controller
+      app.kubernetes.io/name: policy-controller
+      control-plane: syn-sigstore-policy-controller-webhook
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/instance: syn-sigstore-policy-controller
+        app.kubernetes.io/name: policy-controller
+        control-plane: syn-sigstore-policy-controller-webhook
+    spec:
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - podAffinityTerm:
+                labelSelector:
+                  matchLabels:
+                    control-plane: syn-sigstore-policy-controller-webhook
+                topologyKey: kubernetes.io/hostname
+              weight: 100
+      containers:
+        - args: null
+          env:
+            - name: SYSTEM_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+            - name: CONFIG_LOGGING_NAME
+              value: syn-sigstore-policy-controller-webhook-logging
+            - name: CONFIG_OBSERVABILITY_NAME
+              value: syn-sigstore-policy-controller-webhook-observability
+            - name: METRICS_DOMAIN
+              value: sigstore.dev/policy
+            - name: WEBHOOK_NAME
+              value: webhook
+            - name: HOME
+              value: /home/nonroot
+          image: ghcr.io/sigstore/policy-controller/policy-controller@sha256:f291fce5b9c1a69ba54990eda7e0fe4114043b1afefb0f4ee3e6f84ec9ef1605
+          imagePullPolicy: IfNotPresent
+          livenessProbe:
+            failureThreshold: 6
+            httpGet:
+              httpHeaders:
+                - name: k-kubelet-probe
+                  value: webhook
+              path: /healthz
+              port: 8443
+              scheme: HTTPS
+            initialDelaySeconds: 30
+            periodSeconds: 1
+          name: policy-controller-webhook
+          ports:
+            - containerPort: 8443
+              name: https
+              protocol: TCP
+            - containerPort: 9090
+              name: metrics
+              protocol: TCP
+          readinessProbe:
+            failureThreshold: 6
+            httpGet:
+              httpHeaders:
+                - name: k-kubelet-probe
+                  value: webhook
+              path: /readyz
+              port: 8443
+              scheme: HTTPS
+            initialDelaySeconds: 20
+            periodSeconds: 1
+          resources:
+            limits:
+              cpu: 200m
+              memory: 512Mi
+            requests:
+              cpu: 100m
+              memory: 128Mi
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - ALL
+            readOnlyRootFilesystem: true
+            runAsUser: 1000
+          volumeMounts:
+            - mountPath: /home/nonroot
+              name: writable-home-dir
+      nodeSelector: {}
+      serviceAccountName: syn-sigstore-policy-controller-webhook
+      terminationGracePeriodSeconds: 300
+      tolerations: []
+      volumes:
+        - emptyDir: {}
+          name: writable-home-dir

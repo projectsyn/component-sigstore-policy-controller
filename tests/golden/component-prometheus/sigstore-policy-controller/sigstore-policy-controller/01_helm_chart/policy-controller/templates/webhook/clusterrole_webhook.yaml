@@ -1,0 +1,105 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  labels:
+    app.kubernetes.io/instance: syn-sigstore-policy-controller
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: policy-controller
+    app.kubernetes.io/version: 0.8.2
+    control-plane: syn-sigstore-policy-controller-webhook
+    helm.sh/chart: policy-controller-0.6.5
+  name: syn-sigstore-policy-controller-webhook
+rules:
+  - apiGroups:
+      - ''
+    resources:
+      - events
+    verbs:
+      - create
+      - patch
+  - apiGroups:
+      - admissionregistration.k8s.io
+    resources:
+      - validatingwebhookconfigurations
+      - mutatingwebhookconfigurations
+    verbs:
+      - list
+      - watch
+  - apiGroups:
+      - admissionregistration.k8s.io
+    resourceNames:
+      - policy.sigstore.dev
+      - defaulting.clusterimagepolicy.sigstore.dev
+      - validating.clusterimagepolicy.sigstore.dev
+    resources:
+      - validatingwebhookconfigurations
+      - mutatingwebhookconfigurations
+    verbs:
+      - get
+      - update
+      - delete
+  - apiGroups:
+      - ''
+    resourceNames:
+      - syn-sigstore-policy-controller
+    resources:
+      - namespaces
+    verbs:
+      - get
+      - list
+  - apiGroups:
+      - ''
+    resourceNames:
+      - syn-sigstore-policy-controller
+    resources:
+      - namespaces/finalizers
+    verbs:
+      - update
+  - apiGroups:
+      - ''
+    resources:
+      - serviceaccounts
+      - secrets
+    verbs:
+      - get
+  - apiGroups:
+      - policy.sigstore.dev
+    resources:
+      - clusterimagepolicies
+      - clusterimagepolicies/status
+    verbs:
+      - get
+      - list
+      - update
+      - watch
+      - patch
+  - apiGroups:
+      - apiextensions.k8s.io
+    resources:
+      - customresourcedefinitions
+    verbs:
+      - get
+      - list
+      - watch
+      - update
+  - apiGroups:
+      - apiextensions.k8s.io
+    resourceNames:
+      - trustroots.policy.sigstore.dev
+    resources:
+      - customresourcedefinitions
+    verbs:
+      - get
+      - update
+      - list
+  - apiGroups:
+      - policy.sigstore.dev
+    resources:
+      - trustroots
+      - trustroots/status
+    verbs:
+      - get
+      - list
+      - update
+      - watch
+      - patch
