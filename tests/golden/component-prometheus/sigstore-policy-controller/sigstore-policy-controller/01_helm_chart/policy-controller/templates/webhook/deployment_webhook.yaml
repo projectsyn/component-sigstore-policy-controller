@@ -7,7 +7,7 @@ metadata:
     app.kubernetes.io/name: policy-controller
     app.kubernetes.io/version: 0.8.2
     control-plane: syn-sigstore-policy-controller-webhook
-    helm.sh/chart: policy-controller-0.6.5
+    helm.sh/chart: policy-controller-0.6.9
   name: syn-sigstore-policy-controller-webhook
   namespace: syn-sigstore-policy-controller
 spec:
@@ -21,8 +21,11 @@ spec:
     metadata:
       labels:
         app.kubernetes.io/instance: syn-sigstore-policy-controller
+        app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: policy-controller
+        app.kubernetes.io/version: 0.8.2
         control-plane: syn-sigstore-policy-controller-webhook
+        helm.sh/chart: policy-controller-0.6.9
     spec:
       affinity:
         podAntiAffinity:
