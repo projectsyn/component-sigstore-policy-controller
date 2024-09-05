@@ -6,7 +6,7 @@ parameters:
     charts:
       policy-controller:
         source: https://sigstore.github.io/helm-charts
-        version: 0.6.5
+        version: 0.7.0
 
     cluster_policies: {}
 
