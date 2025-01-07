@@ -24,6 +24,10 @@ local app = argocd.App('sigstore-policy-controller', params.namespace) {
   },
 };
 
+local appPath =
+  local project = std.get(std.get(app, 'spec', {}), 'project', 'syn');
+  if project == 'syn' then 'apps' else 'apps-%s' % project;
+
 {
-  'sigstore-policy-controller': app,
+  ['%s/sigstore-policy-controller' % appPath]: app,
 }

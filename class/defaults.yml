@@ -1,6 +1,7 @@
 parameters:
   sigstore_policy_controller:
-    =_metadata: {}
+    =_metadata:
+      multi_tenant: true
     namespace: syn-sigstore-policy-controller
 
     charts:
