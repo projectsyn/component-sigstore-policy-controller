@@ -11,7 +11,7 @@ metadata:
     app.kubernetes.io/name: policy-controller
     app.kubernetes.io/version: 0.8.2
     control-plane: syn-sigstore-policy-controller-cleanup
-    helm.sh/chart: policy-controller-0.7.0
+    helm.sh/chart: policy-controller-0.7.2
   name: syn-sigstore-policy-controller-webhook-cleanup
   namespace: syn-sigstore-policy-controller
 ---
@@ -28,7 +28,7 @@ metadata:
     app.kubernetes.io/name: policy-controller
     app.kubernetes.io/version: 0.8.2
     control-plane: syn-sigstore-policy-controller-cleanup
-    helm.sh/chart: policy-controller-0.7.0
+    helm.sh/chart: policy-controller-0.7.2
   name: syn-sigstore-policy-controller-cleanup
   namespace: syn-sigstore-policy-controller
 rules:
@@ -53,7 +53,7 @@ metadata:
     app.kubernetes.io/name: policy-controller
     app.kubernetes.io/version: 0.8.2
     control-plane: syn-sigstore-policy-controller-cleanup
-    helm.sh/chart: policy-controller-0.7.0
+    helm.sh/chart: policy-controller-0.7.2
   name: syn-sigstore-policy-controller-cleanup
   namespace: syn-sigstore-policy-controller
 roleRef:
@@ -78,7 +78,7 @@ metadata:
     app.kubernetes.io/name: policy-controller
     app.kubernetes.io/version: 0.8.2
     control-plane: syn-sigstore-policy-controller-webhook
-    helm.sh/chart: policy-controller-0.7.0
+    helm.sh/chart: policy-controller-0.7.2
   name: leases-cleanup
   namespace: syn-sigstore-policy-controller
 spec:
