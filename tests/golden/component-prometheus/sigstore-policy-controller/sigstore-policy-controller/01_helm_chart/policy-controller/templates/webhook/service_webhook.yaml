@@ -1,14 +1,13 @@
 apiVersion: v1
 kind: Service
 metadata:
-  annotations: null
   labels:
     app.kubernetes.io/instance: syn-sigstore-policy-controller
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: policy-controller
-    app.kubernetes.io/version: 0.8.2
+    app.kubernetes.io/version: 0.13.1
     control-plane: syn-sigstore-policy-controller-webhook
-    helm.sh/chart: policy-controller-0.7.0
+    helm.sh/chart: policy-controller-0.10.5
   name: webhook
   namespace: syn-sigstore-policy-controller
 spec:
@@ -26,14 +25,13 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  annotations: null
   labels:
     app.kubernetes.io/instance: syn-sigstore-policy-controller
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: policy-controller
-    app.kubernetes.io/version: 0.8.2
+    app.kubernetes.io/version: 0.13.1
     control-plane: syn-sigstore-policy-controller-webhook
-    helm.sh/chart: policy-controller-0.7.0
+    helm.sh/chart: policy-controller-0.10.5
   name: syn-sigstore-policy-controller-webhook-metrics
   namespace: syn-sigstore-policy-controller
 spec:

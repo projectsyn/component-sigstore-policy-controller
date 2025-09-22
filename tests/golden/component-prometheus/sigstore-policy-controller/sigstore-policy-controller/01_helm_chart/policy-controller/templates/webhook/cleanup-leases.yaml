@@ -9,9 +9,9 @@ metadata:
     app.kubernetes.io/instance: syn-sigstore-policy-controller
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: policy-controller
-    app.kubernetes.io/version: 0.8.2
+    app.kubernetes.io/version: 0.13.1
     control-plane: syn-sigstore-policy-controller-cleanup
-    helm.sh/chart: policy-controller-0.7.0
+    helm.sh/chart: policy-controller-0.10.5
   name: syn-sigstore-policy-controller-webhook-cleanup
   namespace: syn-sigstore-policy-controller
 ---
@@ -26,9 +26,9 @@ metadata:
     app.kubernetes.io/instance: syn-sigstore-policy-controller
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: policy-controller
-    app.kubernetes.io/version: 0.8.2
+    app.kubernetes.io/version: 0.13.1
     control-plane: syn-sigstore-policy-controller-cleanup
-    helm.sh/chart: policy-controller-0.7.0
+    helm.sh/chart: policy-controller-0.10.5
   name: syn-sigstore-policy-controller-cleanup
   namespace: syn-sigstore-policy-controller
 rules:
@@ -51,9 +51,9 @@ metadata:
     app.kubernetes.io/instance: syn-sigstore-policy-controller
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: policy-controller
-    app.kubernetes.io/version: 0.8.2
+    app.kubernetes.io/version: 0.13.1
     control-plane: syn-sigstore-policy-controller-cleanup
-    helm.sh/chart: policy-controller-0.7.0
+    helm.sh/chart: policy-controller-0.10.5
   name: syn-sigstore-policy-controller-cleanup
   namespace: syn-sigstore-policy-controller
 roleRef:
@@ -76,9 +76,9 @@ metadata:
     app.kubernetes.io/instance: syn-sigstore-policy-controller
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: policy-controller
-    app.kubernetes.io/version: 0.8.2
+    app.kubernetes.io/version: 0.13.1
     control-plane: syn-sigstore-policy-controller-webhook
-    helm.sh/chart: policy-controller-0.7.0
+    helm.sh/chart: policy-controller-0.10.5
   name: leases-cleanup
   namespace: syn-sigstore-policy-controller
 spec:
@@ -86,6 +86,7 @@ spec:
     metadata:
       name: leases-cleanup
     spec:
+      automountServiceAccountToken: true
       containers:
         - command:
             - /bin/sh
@@ -94,5 +95,8 @@ spec:
           image: cgr.dev/chainguard/kubectl:latest-dev
           imagePullPolicy: IfNotPresent
           name: kubectl
+          resources:
+            limits: null
+            requests: null
       restartPolicy: OnFailure
       serviceAccountName: syn-sigstore-policy-controller-webhook-cleanup

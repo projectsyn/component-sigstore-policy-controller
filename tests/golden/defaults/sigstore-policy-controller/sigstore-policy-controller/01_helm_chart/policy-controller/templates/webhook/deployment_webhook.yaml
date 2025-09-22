@@ -5,9 +5,9 @@ metadata:
     app.kubernetes.io/instance: syn-sigstore-policy-controller
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: policy-controller
-    app.kubernetes.io/version: 0.8.2
+    app.kubernetes.io/version: 0.13.1
     control-plane: syn-sigstore-policy-controller-webhook
-    helm.sh/chart: policy-controller-0.7.0
+    helm.sh/chart: policy-controller-0.10.5
   name: syn-sigstore-policy-controller-webhook
   namespace: syn-sigstore-policy-controller
 spec:
@@ -23,9 +23,9 @@ spec:
         app.kubernetes.io/instance: syn-sigstore-policy-controller
         app.kubernetes.io/managed-by: Helm
         app.kubernetes.io/name: policy-controller
-        app.kubernetes.io/version: 0.8.2
+        app.kubernetes.io/version: 0.13.1
         control-plane: syn-sigstore-policy-controller-webhook
-        helm.sh/chart: policy-controller-0.7.0
+        helm.sh/chart: policy-controller-0.10.5
     spec:
       affinity:
         podAntiAffinity:
@@ -36,9 +36,9 @@ spec:
                     control-plane: syn-sigstore-policy-controller-webhook
                 topologyKey: kubernetes.io/hostname
               weight: 100
+      automountServiceAccountToken: true
       containers:
-        - args: null
-          env:
+        - env:
             - name: SYSTEM_NAMESPACE
               valueFrom:
                 fieldRef:
@@ -53,7 +53,7 @@ spec:
               value: webhook
             - name: HOME
               value: /home/nonroot
-          image: ghcr.io/sigstore/policy-controller/policy-controller@sha256:f291fce5b9c1a69ba54990eda7e0fe4114043b1afefb0f4ee3e6f84ec9ef1605
+          image: ghcr.io/sigstore/policy-controller/policy-controller@sha256:0bcd60beb93f4427c29cf3a669743caf58490e98ded4380c33c09f092734a6ab
           imagePullPolicy: IfNotPresent
           livenessProbe:
             failureThreshold: 6
