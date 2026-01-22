@@ -1,17 +1,15 @@
 apiVersion: policy/v1
 kind: PodDisruptionBudget
 metadata:
-  annotations: null
   labels:
     app.kubernetes.io/instance: syn-sigstore-policy-controller
     app.kubernetes.io/managed-by: Helm
     app.kubernetes.io/name: policy-controller
     app.kubernetes.io/version: 0.8.2
     control-plane: syn-sigstore-policy-controller-webhook
-    helm.sh/chart: policy-controller-0.7.0
+    helm.sh/chart: policy-controller-0.7.2
   name: syn-sigstore-policy-controller-webhook
 spec:
-  maxUnavailable: null
   minAvailable: 1
   selector:
     matchLabels:
