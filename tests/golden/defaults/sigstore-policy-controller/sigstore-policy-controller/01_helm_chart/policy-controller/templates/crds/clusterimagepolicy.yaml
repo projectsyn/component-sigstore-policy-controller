@@ -252,6 +252,11 @@ spec:
                               TrustRoot.TimeStampAuthorities
                             type: string
                         type: object
+                      signatureFormat:
+                        description: SignatureFormat specifies the format the authority
+                          expects. Supported formats are "legacy" and "bundle". If
+                          not specified, the default is "legacy" (cosign's default).
+                        type: string
                       source:
                         description: Sources sets the configuration to specify the
                           sources from where to consume the signatures.
@@ -269,8 +274,11 @@ spec:
                               items:
                                 properties:
                                   name:
-                                    description: 'Name of the referent. More info:
-                                      https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names'
+                                    description: 'Name of the referent. This field
+                                      is effectively required, but due to backwards
+                                      compatibility is allowed to be empty. Instances
+                                      of this type with an empty value here are almost
+                                      certainly wrong. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names'
                                     type: string
                                 type: object
                               type: array
@@ -290,6 +298,10 @@ spec:
                         properties:
                           action:
                             description: Action defines how to handle a matching policy.
+                            type: string
+                          message:
+                            description: For fail actions, emit an optional custom
+                              message
                             type: string
                         type: object
                     type: object
@@ -713,6 +725,11 @@ spec:
                               TrustRoot.TimeStampAuthorities
                             type: string
                         type: object
+                      signatureFormat:
+                        description: SignatureFormat specifies the format the authority
+                          expects. Supported formats are "legacy" and "bundle". If
+                          not specified, the default is "legacy" (cosign's default).
+                        type: string
                       source:
                         description: Sources sets the configuration to specify the
                           sources from where to consume the signatures.
@@ -730,8 +747,11 @@ spec:
                               items:
                                 properties:
                                   name:
-                                    description: 'Name of the referent. More info:
-                                      https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names'
+                                    description: 'Name of the referent. This field
+                                      is effectively required, but due to backwards
+                                      compatibility is allowed to be empty. Instances
+                                      of this type with an empty value here are almost
+                                      certainly wrong. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names'
                                     type: string
                                 type: object
                               type: array
@@ -751,6 +771,10 @@ spec:
                         properties:
                           action:
                             description: Action defines how to handle a matching policy.
+                            type: string
+                          message:
+                            description: For fail actions, emit an optional custom
+                              message
                             type: string
                         type: object
                     type: object
